@@ -1,0 +1,58 @@
+scalar DateTime
+
+type Query {
+  account(id: ID!): Account
+  app(id: ID!): App
+  apps: [App!]!
+  user(id: ID!): User
+  users: [User!]!
+}
+
+type Mutation {
+  createAccount(name: String!, email: String!, password: String!): AccountAuthPayload
+  loginAccount(email: String!, password: String!): AccountAuthPayload
+  createApp(name: String!): App
+  createUser(name: String!, email: String!, password: String!): UserAuthPayload
+  loginUser(email: String!, password: String!): UserAuthPayload
+}
+
+type Account {
+  id: ID!
+  email: String!
+  name: String!
+  password: String!
+  emailVerified: Boolean!
+  apps: [App!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type App {
+  id: ID!
+  name: String!
+  owner: Account!
+  users: [User!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type User {
+  id: ID!
+  name: String
+  email: String!
+  password: String!
+  owner: App!
+  emailVerified: Boolean!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+type AccountAuthPayload {
+  token: String
+  account: Account
+}
+
+type UserAuthPayload {
+  token: String
+  user: User
+}

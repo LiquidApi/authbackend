@@ -1,0 +1,30 @@
+type Account {
+  id: ID! @id
+  email: String! @unique
+  name: String!
+  password: String!
+  emailVerified: Boolean! @default(value: false)
+  apps: [App!]! @relation(link: INLINE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type App {
+  id: ID! @id
+  name: String!
+  owner: Account
+  users: [User!]! @relation(link: INLINE)
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
+
+type User {
+  id: ID! @id
+  email: String!
+  name: String
+  password: String!
+  emailVerified: Boolean! @default(value: false)
+  owner: App
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
+}
